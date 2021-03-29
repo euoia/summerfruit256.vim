@@ -1,6 +1,6 @@
 " Vim color file
 " Maintainer: James Pickard <james.pickard@gmail.com>
-" Last Change: 2016-02-20
+" Last Change: 2018-07-28
 "
 " This theme only works in GUI vims and Neovim. It does not use cterm to set
 " colors, due to a bug in vim that prevents the theme being reloaded when
@@ -221,11 +221,18 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 
         " sets the highlighting for the given group
         fun! <SID>X(group, fg, bg, attr)
+            " Strip the leading #.
+            " I left this in because ap/vim-css-color highlights them nicely
+            " with the #.
+
             if a:fg != ""
-                exec "hi " . a:group . " guifg=#" . a:fg . " ctermfg=" . <SID>rgb(a:fg)
+                let fg=strpart(a:fg, 1)
+                exec "hi " . a:group . " guifg=#" . fg . " ctermfg=" . <SID>rgb(fg)
             endif
+
             if a:bg != ""
-                exec "hi " . a:group . " guibg=#" . a:bg . " ctermbg=" . <SID>rgb(a:bg)
+                let bg=strpart(a:bg, 1)
+                exec "hi " . a:group . " guibg=#" . bg . " ctermbg=" . <SID>rgb(bg)
             endif
 
             if a:attr == ""
@@ -237,126 +244,126 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
     " }}
 
     if &background == "dark"
-        let s:background = "2b2b2b"
+        let s:background = "#2b2b2b"
 
         " Global
-        call <SID>X("Normal", "cccccc", s:background, "")
-        call <SID>X("NonText", "b7dce8", "3c3c3c", "")
+        call <SID>X("Normal",                       "#cccccc",      s:background,   "")
+        call <SID>X("NonText",                      "#b7dce8",      "#3c3c3c",      "")
 
-        call <SID>X("CursorLine", "", "3b3b3b", "")
-        call <SID>X("CursorLineNr", "cccc00", "3b3b3b", "")
-        call <SID>X("Folded", "787878", "3b3b3b", "")
-        call <SID>X("LineNr", "a1a2a1", "234F6D", "bold")
-        call <SID>X("VertSplit", "000000", "000000", "")
-        call <SID>X("Comment", "4A9249", "", "bold")
+        call <SID>X("CursorLine",                   "",             "#000000",      "")
+        call <SID>X("CursorLineNr",                 "#cccc00",      "#3b3b3b",      "")
+        call <SID>X("Folded",                       "#787878",      "#3b3b3b",      "")
+        call <SID>X("LineNr",                       "#a1a2a1",      "#234F6D",      "bold")
+        call <SID>X("VertSplit",                    "#000000",      "#000000",      "")
+        call <SID>X("Comment",                      "#4A9249",      "",             "bold")
 
         " Interface Elements
-        call <SID>X("StatusLine", "eeeeee", "239424", "bold")
-        call <SID>X("StatusLineNC", "7b9499", "325B32", "")
+        call <SID>X("StatusLine",                   "#eeeeee",      "#239424",      "bold")
+        call <SID>X("StatusLineNC",                 "#7b9499",      "#325B32",      "")
 
         " NERDTree
-        call <SID>X("NERDTreeBookmarksLeader", s:background, s:background, "bold")
+        call <SID>X("NERDTreeBookmarksLeader",      s:background,   s:background,   "bold")
 
         " VIM Indent Guides
-        call <SID>X("IndentGuidesOdd", "", "444444", "")
-        call <SID>X("IndentGuidesEven", "", "3a3a3a", "")
+        call <SID>X("IndentGuidesOdd",              "",             "#444444",      "")
+        call <SID>X("IndentGuidesEven",             "",             "#3a3a3a",      "")
     else
-        let s:background = "ffffff"
+        let s:background = "#ffffff"
 
-        call <SID>X("Normal", "000000", s:background, "")
-        call <SID>X("NonText", "438ec3", "b7dce8", "")
+        call <SID>X("Normal",                       "#000000",      s:background,   "")
+        call <SID>X("NonText",                      "#438ec3",      "#b7dce8",      "")
 
-        call <SID>X("CursorLine", "", "c0d9eb", "")
-        call <SID>X("CursorLineNr", "aa0000", "", "bold")
-        call <SID>X("Folded", "3c78a2", "c3daea", "")
-        call <SID>X("LineNr", "eeeeee", "438ec3", "bold")
-        call <SID>X("VertSplit", "3687a2", "3687a2", "")
-        call <SID>X("Comment", "22a21f", "", "bold")
+        call <SID>X("CursorLine",                   "",             "#c0d9eb",      "")
+        call <SID>X("CursorLineNr",                 "#aa0000",      "",             "bold")
+        call <SID>X("Folded",                       "#3c78a2",      "#c3daea",      "")
+        call <SID>X("LineNr",                       "#eeeeee",      "#438ec3",      "bold")
+        call <SID>X("VertSplit",                    "#3687a2",      "#3687a2",      "")
+        call <SID>X("Comment",                      "#22a21f",      "",             "bold")
 
         " Interface Elements
-        call <SID>X("StatusLine", "ffffff", "43c464", "bold")
-        call <SID>X("StatusLineNC", "9bd4a9", "51b069", "")
+        call <SID>X("StatusLine",                   "#ffffff",      "#43c464",      "bold")
+        call <SID>X("StatusLineNC",                 "#9bd4a9",      "#51b069",      "")
 
         " NERDTree
-        call <SID>X("NERDTreeBookmarksLeader", s:background, s:background, "bold")
+        call <SID>X("NERDTreeBookmarksLeader",      s:background,   s:background,   "bold")
 
        " VIM Indent Guides
-        call <SID>X("IndentGuidesOdd", "", "87ffff", "")
-        call <SID>X("IndentGuidesEven", "", "5fffff", "")
+        call <SID>X("IndentGuidesOdd",              "",             "#87ffff",      "")
+        call <SID>X("IndentGuidesEven",             "",             "#5fffff",      "")
     endif
 
 
     " Search
-    call <SID>X("Search", "800000", "ffae00", "")
-    call <SID>X("IncSearch", "800000", "ffae00", "")
+    call <SID>X("Search",               "#800000",      "#ffae00",      "")
+    call <SID>X("IncSearch",            "#800000",      "#ffae00",      "")
 
     " Interface Elements
-    call <SID>X("IncSearch", "708090", "f0e68c", "")
-    call <SID>X("Pmenu", "ffffff", "cb2f27", "")
-    call <SID>X("SignColumn", "", "", "")
-    call <SID>X("MatchParen", "", "", "")
-    call <SID>X("Visual", "", "dddddd", "")
+    call <SID>X("IncSearch",            "#708090",      "#f0e68c",      "")
+    call <SID>X("Pmenu",                "#ffffff",      "#555555",      "")
+    call <SID>X("SignColumn",           "",             "",             "")
+    call <SID>X("MatchParen",           "",             "",             "")
+    call <SID>X("Visual",               "",             "#dddddd",      "")
 
     " Specials
-    call <SID>X("Todo", "e50808", "dbf3cd", "bold")
-    call <SID>X("Title", "000000", "", "")
-    call <SID>X("Special", "fd8900", "", "")
+    call <SID>X("Todo",                 "#e50808",      "#dbf3cd",      "bold")
+    call <SID>X("Title",                "#000000",      "",             "")
+    call <SID>X("Special",              "#fd8900",      "",             "")
 
     " Syntax Elements
-    call <SID>X("String", "0086d2", "", "")
-    call <SID>X("Constant", "0086d2", "", "")
-    call <SID>X("Number", "0086f7", "", "")
-    call <SID>X("Statement", "fb660a", "", "")
-    call <SID>X("Function", "ff0086", "", "")
-    call <SID>X("PreProc", "ff0007", "", "")
-    call <SID>X("Type", "70796b", "", "")
-    call <SID>X("Error", "ffffff", "d40000", "")
-    call <SID>X("Identifier", "ff0086", "", "")
-    call <SID>X("Label", "ff0086", "", "")
+    call <SID>X("String",               "#0086d2",      "",             "")
+    call <SID>X("Constant",             "#0086d2",      "",             "")
+    call <SID>X("Number",               "#0086f7",      "",             "")
+    call <SID>X("Statement",            "#fb660a",      "",             "")
+    call <SID>X("Function",             "#ff0086",      "",             "")
+    call <SID>X("PreProc",              "#ff0007",      "",             "")
+    call <SID>X("Type",                 "#70796b",      "",             "")
+    call <SID>X("Error",                "#ffffff",      "#d40000",      "")
+    call <SID>X("Identifier",           "#ff0086",      "",             "")
+    call <SID>X("Label",                "#ff0086",      "",             "")
 
     " Python Highlighting
-    call <SID>X("pythonCoding", "ff0086", "", "")
-    call <SID>X("pythonRun", "ff0086", "", "")
-    call <SID>X("pythonBuiltinObj", "2b6ba2", "", "")
-    call <SID>X("pythonBuiltinFunc", "2b6ba2", "", "")
-    call <SID>X("pythonException", "ee0000", "", "")
-    call <SID>X("pythonExClass", "66cd66", "", "")
-    call <SID>X("pythonSpaceError", "", "", "")
-    call <SID>X("pythonDocTest", "2f5f49", "", "")
-    call <SID>X("pythonDocTest2", "3b916a", "", "")
-    call <SID>X("pythonFunction", "ee0000", "", "")
-    call <SID>X("pythonClass", "ff0086", "", "")
+    call <SID>X("pythonCoding",         "#ff0086",      "",             "")
+    call <SID>X("pythonRun",            "#ff0086",      "",             "")
+    call <SID>X("pythonBuiltinObj",     "#2b6ba2",      "",             "")
+    call <SID>X("pythonBuiltinFunc",    "#2b6ba2",      "",             "")
+    call <SID>X("pythonException",      "#ee0000",      "",             "")
+    call <SID>X("pythonExClass",        "#66cd66",      "",             "")
+    call <SID>X("pythonSpaceError",     "",             "",             "")
+    call <SID>X("pythonDocTest",        "#2f5f49",      "",             "")
+    call <SID>X("pythonDocTest2",       "#3b916a",      "",             "")
+    call <SID>X("pythonFunction",       "#ee0000",      "",             "")
+    call <SID>X("pythonClass",          "#ff0086",      "",             "")
 
     " HTML Highlighting
-    call <SID>X("htmlTag", "00bdec", "", "")
-    call <SID>X("htmlEndTag", "00bdec", "", "")
-    call <SID>X("htmlSpecialTagName", "4aa04a", "", "")
-    call <SID>X("htmlTagName", "4aa04a", "", "")
-    call <SID>X("htmlTagN", "4aa04a", "", "")
+    call <SID>X("htmlTag",              "#00bdec",      "",             "")
+    call <SID>X("htmlEndTag",           "#00bdec",      "",             "")
+    call <SID>X("htmlSpecialTagName",   "#4aa04a",      "",             "")
+    call <SID>X("htmlTagName",          "#4aa04a",      "",             "")
+    call <SID>X("htmlTagN",             "#4aa04a",      "",             "")
 
     " Jinja Highlighting
-    call <SID>X("jinjaTagBlock", "ff0007", "fbf4c7", "bold")
-    call <SID>X("jinjaVarBlock", "ff0007", "fbf4c7", "")
-    call <SID>X("jinjaString", "0086d2", "fbf4c7", "")
-    call <SID>X("jinjaNumber", "bf0945", "fbf4c7", "bold")
-    call <SID>X("jinjaStatement", "fb660a", "fbf4c7", "bold")
-    call <SID>X("jinjaComment", "008800", "002300", "italic")
-    call <SID>X("jinjaFilter", "ff0086", "fbf4c7", "")
-    call <SID>X("jinjaRaw", "aaaaaa", "fbf4c7", "")
-    call <SID>X("jinjaOperator", "ffffff", "fbf4c7", "")
-    call <SID>X("jinjaVariable", "92cd35", "fbf4c7", "")
-    call <SID>X("jinjaAttribute", "dd7700", "fbf4c7", "")
-    call <SID>X("jinjaSpecial", "008ffd", "fbf4c7", "")
+    call <SID>X("jinjaTagBlock",        "#ff0007",      "#fbf4c7",      "bold")
+    call <SID>X("jinjaVarBlock",        "#ff0007",      "#fbf4c7",      "")
+    call <SID>X("jinjaString",          "#0086d2",      "#fbf4c7",      "")
+    call <SID>X("jinjaNumber",          "#bf0945",      "#fbf4c7",      "bold")
+    call <SID>X("jinjaStatement",       "#fb660a",      "#fbf4c7",      "bold")
+    call <SID>X("jinjaComment",         "#008800",      "#002300",      "italic")
+    call <SID>X("jinjaFilter",          "#ff0086",      "#fbf4c7",      "")
+    call <SID>X("jinjaRaw",             "#aaaaaa",      "#fbf4c7",      "")
+    call <SID>X("jinjaOperator",        "#ffffff",      "#fbf4c7",      "")
+    call <SID>X("jinjaVariable",        "#92cd35",      "#fbf4c7",      "")
+    call <SID>X("jinjaAttribute",       "#dd7700",      "#fbf4c7",      "")
+    call <SID>X("jinjaSpecial",         "#008ffd",      "#fbf4c7",      "")
 
     " VimDiff
-    call <SID>X("DiffAdd", "", "ffcccc", "")
-    call <SID>X("DiffDelete", "", "ffcccc", "")
-    call <SID>X("DiffChange", "", "ffcccc", "")
-    call <SID>X("DiffText", "", "ffaaaa", "")
+    call <SID>X("DiffAdd",              "",             "#ffcccc",      "")
+    call <SID>X("DiffDelete",           "",             "#ffcccc",      "")
+    call <SID>X("DiffChange",           "",             "#ffcccc",      "")
+    call <SID>X("DiffText",             "",             "#ffaaaa",      "")
 
     " SignColumn, used for Neomake.
-    call <SID>X("SignColumn", "eeeeee", "bbbbbb", "bold")
-    call <SID>X("ModeMsg", "eeeeee", "bbbbbb", "bold")
+    call <SID>X("SignColumn",           "#eeeeee",      "#bbbbbb",      "bold")
+    call <SID>X("ModeMsg",              "#eeeeee",      "#bbbbbb",      "bold")
 endif
 
 " vim: set fdl=0 fdm=marker:
